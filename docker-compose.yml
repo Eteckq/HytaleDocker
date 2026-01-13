@@ -8,6 +8,7 @@ services:
       - "5520:5520"
     volumes:
       - ../data:/hytale/data
+      - ../.hytale-downloader-credentials.json:/hytale/.hytale-downloader-credentials.json
     stdin_open: true
     tty: true
     restart: unless-stopped
