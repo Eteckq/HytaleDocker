@@ -15,10 +15,8 @@ if [ ! -f "Server/HytaleServer.jar" ]; then
     echo "Suivez les instructions affichées par le downloader."
     echo ""
     
-    # Exécuter le downloader et attendre que l'utilisateur fasse l'auth
-    ./hytale-downloader-linux-amd64
+    /install/hytale-downloader-linux-amd64
     
-    # Après l'authentification, vérifier si un fichier zip a été téléchargé
     ZIP_FILE=$(find . -maxdepth 1 -name "*.zip" -type f | head -1)
     
     if [ -n "$ZIP_FILE" ]; then
@@ -29,7 +27,6 @@ if [ ! -f "Server/HytaleServer.jar" ]; then
         echo "Fichiers extraits avec succès!"
     fi
     
-    # Vérifier que Server/HytaleServer.jar existe maintenant
     if [ ! -f "Server/HytaleServer.jar" ]; then
         echo ""
         echo "ERREUR: Server/HytaleServer.jar introuvable après le téléchargement."
@@ -39,7 +36,6 @@ if [ ! -f "Server/HytaleServer.jar" ]; then
     echo ""
 fi
 
-# Déterminer le chemin vers HytaleServer.jar
 if [ -f "Server/HytaleServer.jar" ]; then
     SERVER_JAR="Server/HytaleServer.jar"
 else
@@ -47,7 +43,6 @@ else
     exit 1
 fi
 
-# Déterminer le chemin vers Assets.zip
 ASSETS_PATH="${HYTALE_ASSETS_PATH:-Assets.zip}"
 if [ ! -f "$ASSETS_PATH" ]; then
     # Chercher dans le répertoire parent
@@ -58,7 +53,6 @@ if [ ! -f "$ASSETS_PATH" ]; then
     fi
 fi
 
-# Lancer le serveur Hytale
 echo "Démarrage du serveur Hytale..."
 echo "JAR: $SERVER_JAR"
 echo "Assets: $ASSETS_PATH"

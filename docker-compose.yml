@@ -6,8 +6,8 @@ services:
     container_name: hytale-server
     ports:
       - "5520:5520"
-    # volumes:
-    #   - ../data:/hytale
+    volumes:
+      - ../data:/hytale/
     stdin_open: true
     tty: true
     restart: unless-stopped

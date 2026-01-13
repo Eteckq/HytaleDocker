@@ -1,6 +1,6 @@
 FROM eclipse-temurin:25-jdk-jammy
 
-WORKDIR /hytale
+WORKDIR /install
 
 RUN apt-get update && \
     apt-get install -y wget unzip curl && \
