@@ -1,46 +1,5 @@
 # Données du serveur
 data/
 
-# Fichiers binaires téléchargés
-hytale-downloader-*
-*.exe
-
 # Credentials et tokens
 .hytale-downloader-credentials.json
-*.token
-*.key
-
-# Fichiers du serveur Hytale
-Server/
-Assets.zip
-
-# Logs
-*.log
-logs/
-
-# Fichiers temporaires
-*.tmp
-*.temp
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-env/
-ENV/
-
-# Docker
-.dockerignore
-

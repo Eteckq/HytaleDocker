@@ -7,16 +7,7 @@ services:
     ports:
       - "5520:5520"
     volumes:
-      # Volume pour les données persistantes (mondes, configurations, etc.)
       - ./data:/hytale/data
-      # Si vous avez déjà téléchargé les fichiers, montez-les ici:
-      # - ./Server:/hytale/Server
-      # - ./Assets.zip:/hytale/Assets.zip
-    # environment:
-      # Optionnel: Token OAuth2 pour le téléchargement automatique
-      # HYTALE_OAUTH_TOKEN: ""
-      # Optionnel: Chemin vers les assets
-      # HYTALE_ASSETS_PATH: "Assets.zip"
     stdin_open: true
     tty: true
     restart: unless-stopped
