@@ -3,10 +3,6 @@ set -e
 
 cd /hytale
 
-# Créer le fichier de credentials s'il n'existe pas
-if [ ! -f ".hytale-downloader-credentials.json" ]; then
-    echo "{}" > .hytale-downloader-credentials.json
-fi
 
 # Si les fichiers du serveur ne sont pas présents, lancer le téléchargement interactif
 if [ ! -f "Server/HytaleServer.jar" ]; then
