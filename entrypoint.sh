@@ -4,7 +4,7 @@ set -e
 cd /hytale
 
 # Si les fichiers du serveur ne sont pas présents, lancer le téléchargement interactif
-if [ ! -f "HytaleServer.jar" ] && [ ! -d "Server" ]; then
+if [ ! -f "Server/HytaleServer.jar" ]; then
     echo "=========================================="
     echo "Fichiers du serveur non trouvés."
     echo "Lancement du Hytale Downloader..."
@@ -17,18 +17,21 @@ if [ ! -f "HytaleServer.jar" ] && [ ! -d "Server" ]; then
     # Exécuter le downloader et attendre que l'utilisateur fasse l'auth
     ./hytale-downloader-linux-amd64
     
-    # Après l'authentification, vérifier si les fichiers ont été téléchargés
-    if [ -f "game.zip" ]; then
+    # Après l'authentification, vérifier si un fichier zip a été téléchargé
+    ZIP_FILE=$(find . -maxdepth 1 -name "*.zip" -type f | head -1)
+    
+    if [ -n "$ZIP_FILE" ]; then
         echo ""
-        echo "Extraction des fichiers téléchargés..."
-        unzip -q game.zip
-        rm game.zip
+        echo "Extraction du fichier téléchargé: $ZIP_FILE"
+        unzip -q "$ZIP_FILE" -d .
+        rm -f "$ZIP_FILE"
         echo "Fichiers extraits avec succès!"
-    elif [ -d "Server" ] || [ -f "HytaleServer.jar" ]; then
-        echo "Fichiers trouvés après téléchargement."
-    else
+    fi
+    
+    # Vérifier que Server/HytaleServer.jar existe maintenant
+    if [ ! -f "Server/HytaleServer.jar" ]; then
         echo ""
-        echo "ERREUR: Aucun fichier serveur trouvé après le téléchargement."
+        echo "ERREUR: Server/HytaleServer.jar introuvable après le téléchargement."
         echo "Veuillez réessayer ou monter les fichiers manuellement."
         exit 1
     fi
@@ -36,11 +39,8 @@ if [ ! -f "HytaleServer.jar" ] && [ ! -d "Server" ]; then
 fi
 
 # Déterminer le chemin vers HytaleServer.jar
-if [ -f "HytaleServer.jar" ]; then
-    SERVER_JAR="HytaleServer.jar"
-elif [ -f "Server/HytaleServer.jar" ]; then
+if [ -f "Server/HytaleServer.jar" ]; then
     SERVER_JAR="Server/HytaleServer.jar"
-    cd Server
 else
     echo "ERREUR: HytaleServer.jar introuvable!"
     exit 1
