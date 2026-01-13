@@ -13,7 +13,7 @@ RUN wget -O hytale-downloader.zip https://downloader.hytale.com/hytale-downloade
 
 RUN mkdir -p /hytale/data
 
-# EXPOSE 5520
+EXPOSE 5520
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
