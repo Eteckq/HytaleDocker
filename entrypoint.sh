@@ -1,0 +1,67 @@
+#!/bin/bash
+set -e
+
+cd /hytale
+
+# Si les fichiers du serveur ne sont pas présents, lancer le téléchargement interactif
+if [ ! -f "HytaleServer.jar" ] && [ ! -d "Server" ]; then
+    echo "=========================================="
+    echo "Fichiers du serveur non trouvés."
+    echo "Lancement du Hytale Downloader..."
+    echo "=========================================="
+    echo ""
+    echo "Vous allez devoir vous authentifier via OAuth2."
+    echo "Suivez les instructions affichées par le downloader."
+    echo ""
+    
+    # Exécuter le downloader et attendre que l'utilisateur fasse l'auth
+    ./hytale-downloader-linux-amd64
+    
+    # Après l'authentification, vérifier si les fichiers ont été téléchargés
+    if [ -f "game.zip" ]; then
+        echo ""
+        echo "Extraction des fichiers téléchargés..."
+        unzip -q game.zip
+        rm game.zip
+        echo "Fichiers extraits avec succès!"
+    elif [ -d "Server" ] || [ -f "HytaleServer.jar" ]; then
+        echo "Fichiers trouvés après téléchargement."
+    else
+        echo ""
+        echo "ERREUR: Aucun fichier serveur trouvé après le téléchargement."
+        echo "Veuillez réessayer ou monter les fichiers manuellement."
+        exit 1
+    fi
+    echo ""
+fi
+
+# Déterminer le chemin vers HytaleServer.jar
+if [ -f "HytaleServer.jar" ]; then
+    SERVER_JAR="HytaleServer.jar"
+elif [ -f "Server/HytaleServer.jar" ]; then
+    SERVER_JAR="Server/HytaleServer.jar"
+    cd Server
+else
+    echo "ERREUR: HytaleServer.jar introuvable!"
+    exit 1
+fi
+
+# Déterminer le chemin vers Assets.zip
+ASSETS_PATH="${HYTALE_ASSETS_PATH:-Assets.zip}"
+if [ ! -f "$ASSETS_PATH" ]; then
+    # Chercher dans le répertoire parent
+    if [ -f "../$ASSETS_PATH" ]; then
+        ASSETS_PATH="../$ASSETS_PATH"
+    else
+        echo "AVERTISSEMENT: Assets.zip non trouvé. Le serveur pourrait ne pas démarrer correctement."
+    fi
+fi
+
+# Lancer le serveur Hytale
+echo "Démarrage du serveur Hytale..."
+echo "JAR: $SERVER_JAR"
+echo "Assets: $ASSETS_PATH"
+echo ""
+
+exec java -jar "$SERVER_JAR" --assets "$ASSETS_PATH"
+
