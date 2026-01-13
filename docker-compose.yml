@@ -5,7 +5,8 @@ services:
     build: .
     container_name: hytale-server
     ports:
-      - "5520:5520"
+      - "5520:5520/tcp"
+      - "5520:5520/udp"
     volumes:
       - ../data:/hytale/
     stdin_open: true
